@@ -28,6 +28,7 @@ RUN apt update && apt install -y --no-install-recommends \
 # install PHP and Composer
 ENV PHP_VERSION 8.2.12-*
 RUN apt update && apt install -y --no-install-recommends \
+    php-redis \
     php8.2-bcmath=$PHP_VERSION \
     php8.2-curl=$PHP_VERSION \
     php8.2-fpm=$PHP_VERSION \
@@ -43,4 +44,5 @@ RUN apt update && apt install -y --no-install-recommends \
     --install-dir=/usr/local/bin --filename=composer \
   # smoke tests
   && php --version \
+  && php --ri redis \
   && composer --version
