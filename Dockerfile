@@ -26,7 +26,7 @@ RUN apt update && apt install -y --no-install-recommends \
   && yarn --version
 
 # install PHP and Composer
-ENV PHP_VERSION 8.2.12-*
+ENV PHP_VERSION 8.2.13-*
 RUN apt update && apt install -y --no-install-recommends \
     php-redis \
     php8.2-bcmath=$PHP_VERSION \
