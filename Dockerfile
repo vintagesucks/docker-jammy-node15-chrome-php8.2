@@ -1,5 +1,5 @@
 FROM ubuntu:jammy
-
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 ENV DEBIAN_FRONTEND=noninteractive
 
 # install essential packages, repos, Node.js, Yarn and Google Chrome
@@ -28,7 +28,6 @@ RUN apt update && apt install -y --no-install-recommends \
 # install PHP and Composer
 ENV PHP_VERSION 8.2.14-*
 RUN apt update && apt install -y --no-install-recommends \
-    php-redis \
     php8.2-bcmath=$PHP_VERSION \
     php8.2-curl=$PHP_VERSION \
     php8.2-fpm=$PHP_VERSION \
@@ -36,6 +35,7 @@ RUN apt update && apt install -y --no-install-recommends \
     php8.2-intl=$PHP_VERSION \
     php8.2-mbstring=$PHP_VERSION \
     php8.2-mysql=$PHP_VERSION \
+    php8.2-redis=6.* \
     php8.2-sqlite3=$PHP_VERSION \
     php8.2-xml=$PHP_VERSION \
     php8.2-zip=$PHP_VERSION \
@@ -43,6 +43,6 @@ RUN apt update && apt install -y --no-install-recommends \
   && curl -sS https://getcomposer.org/installer | php -- \
     --install-dir=/usr/local/bin --filename=composer \
   # smoke tests
-  && php --version \
+  && [[ $(php --version) == *"PHP 8.2"* ]] \
   && php --ri redis \
   && composer --version
